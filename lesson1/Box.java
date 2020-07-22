@@ -3,7 +3,7 @@ package homework1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Box<T> {
+public class Box<T extends Fruit> {
 
     private ArrayList<T> box;
 
@@ -32,7 +32,7 @@ public class Box<T> {
     }
 
     public float getWeight() {
-        return box.stream().mapToInt(e -> ((Fruit) e).getWeight()).sum();
+        return box.stream().mapToInt(e -> e.getWeight()).sum();
     }
 
     public int getTotalElements() {
