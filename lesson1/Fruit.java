@@ -3,14 +3,14 @@ package homework1;
 public abstract class Fruit {
 
     private String type;
-    private int weight;
+    private float weight;
 
-    public Fruit(String type, int weight) {
+    public Fruit(String type, float weight) {
         this.type = type;
         this.weight = weight;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
