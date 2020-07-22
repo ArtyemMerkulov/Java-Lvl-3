@@ -2,7 +2,7 @@ package homework1;
 
 public class Apple extends Fruit {
 
-    public Apple(int weight) {
+    public Apple(float weight) {
         super("Apple", weight);
     }
 }
