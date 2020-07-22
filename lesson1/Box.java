@@ -13,10 +13,6 @@ public class Box<T extends Fruit> {
         weight = 0;
     }
 
-    public Box(Box box) {
-        shiftTo(box);
-    }
-
     public void shiftTo(Box box) {
         if (this == box) return;
 
@@ -33,6 +29,10 @@ public class Box<T extends Fruit> {
         box.clear();
         box.ensureCapacity(0);
         weight = 0;
+    }
+
+    public boolean isWeightEquals(Box box) {
+        return getWeight() == box.getWeight();
     }
 
     public T get(int pos) {
@@ -55,7 +55,7 @@ public class Box<T extends Fruit> {
         return getElements(0, box.size());
     }
 
-    public T removeElements(int index) {
+    public T remove(int index) {
         return box.remove(index);
     }
 
