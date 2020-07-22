@@ -83,10 +83,10 @@ public class Main {
         secondAppleBox.add(new Apple(9));
         secondAppleBox.add(new Apple(10));
 
-        System.out.println("\nfirstOrangeBox equals secondOrangeBox: " + firstOrangeBox.equals(secondOrangeBox));
-        System.out.println("firstOrangeBox equals firstAppleBox: " + firstOrangeBox.equals(firstAppleBox));
-        System.out.println("firstAppleBox equals firstAppleBox: " + firstAppleBox.equals(firstAppleBox));
-        System.out.println("firstAppleBox equals secondAppleBox: " + firstAppleBox.equals(secondAppleBox));
+        System.out.println("\nfirstOrangeBox equals secondOrangeBox: " + firstOrangeBox.isWeightEquals(secondOrangeBox));
+        System.out.println("firstOrangeBox equals firstAppleBox: " + firstOrangeBox.isWeightEquals(firstAppleBox));
+        System.out.println("firstAppleBox equals firstAppleBox: " + firstAppleBox.isWeightEquals(firstAppleBox));
+        System.out.println("firstAppleBox equals secondAppleBox: " + firstAppleBox.isWeightEquals(secondAppleBox));
 
         System.out.println("\nfirstOrangeBox: ");
         for (Orange o : firstOrangeBox.getAllElements()) o.info();
