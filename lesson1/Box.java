@@ -63,8 +63,15 @@ public class Box<T extends Fruit> {
     public boolean equals(Object anObject) {
         if (this == anObject) return true;
 
-        if (anObject instanceof Box)
-            return getWeight() == ((Box) anObject).getWeight();
+        if (anObject instanceof Box) {
+            if (getTotalElements() != ((Box) anObject).getTotalElements()) return false;
+            if (!isWeightEquals((Box) anObject)) return false;
+
+            for (int i = 0; i < getTotalElements(); i++)
+                if (!get(i).equals(((Box) anObject).get(i))) return false;
+            
+            return true;
+        }
 
         return false;
     }
