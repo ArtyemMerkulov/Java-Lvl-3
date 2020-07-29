@@ -6,12 +6,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 public class Main {
 
     public static final String TASKS_FILES_DIR_PATH = "src/homework3/files/";
 
-    public static final int CHARS_PER_PAGE = 200000;
+    public static final int CHARS_PER_PAGE = 1800;
 
     public static void main(String[] args) {
 
@@ -75,7 +76,7 @@ public class Main {
         String thirdTaskFilePath = TASKS_FILES_DIR_PATH + "8";
         String page = null;
 
-        long t1 = System.currentTimeMillis();
+        long t0 = System.currentTimeMillis();
 
         try {
             page = getPage(thirdTaskFilePath, 2);
@@ -86,7 +87,64 @@ public class Main {
         System.out.println(page);
         System.out.println("\nLENGTH OF STRING: " + page.length() + " symbols");
 
-        System.out.println("Runtime: " + (System.currentTimeMillis() - t1) + " ms"); // ~25 ms при 200 000 символов
+        System.out.println("Runtime: " + (System.currentTimeMillis() - t0) + " ms"); // ~25 ms при 200 000 символов
+
+        /*
+        Реализация приведенная ниже работает для файла размером ~30 Мб (30 720 000 символов) и числом символов на
+        странице 1800 с кодировкой символов UTF8 (не имеет значения используется ли там ASCII-совместимые символы
+        или нет) около 5 - 6 минут при первичной индексации. При запросе страницы длинной 1800 символов время
+        составляет ~1000 милисекунд. Повторная индексация файла не требуется, так как реализованы методы save и load.
+
+        Подскажите, пожалуйста, как можно оптимизировать индексацию?
+        */
+        String thirdTaskFilePathTest = TASKS_FILES_DIR_PATH + "8";
+        String pageFileReaderPathTest = TASKS_FILES_DIR_PATH + "PageFileReader.ser";
+
+        String firstRes = null, secondRes = null;
+        int pageNum = 0;
+
+        long t1 = System.currentTimeMillis();
+
+        try {
+            PageFileReader pageFileReaderFirst = new PageFileReader(thirdTaskFilePathTest, CHARS_PER_PAGE);
+            PageFileReader.save(pageFileReaderPathTest, pageFileReaderFirst);
+
+            pageNum = new Random().nextInt(pageFileReaderFirst.getTotalPages()) + 1;
+            firstRes = pageFileReaderFirst.getPage(pageNum);
+
+            System.out.println("Total pages: " + pageFileReaderFirst.getTotalPages());
+            System.out.println("Res string len: " + firstRes.length() + "\nRes string: " + firstRes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No such page!");
+            e.printStackTrace();
+        }
+
+        long t2 = System.currentTimeMillis();
+
+        System.out.println("Runtime first init: " + (t2 - t1) + " ms\n"); // ~228080 ms при 200 000 символов
+
+        try {
+            PageFileReader pageFileReaderSecond = PageFileReader.load(pageFileReaderPathTest);
+
+            secondRes = pageFileReaderSecond.getPage(pageNum);
+
+            System.out.println("Total pages: " + pageFileReaderSecond.getTotalPages());
+            System.out.println("Res string len: " + secondRes.length() + "\nRes string: " + secondRes);;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            System.out.println("No such page!");
+            e.printStackTrace();
+        }
+
+        long t3 = System.currentTimeMillis();
+
+        System.out.println("Runtime second init: " + (t3 - t2) + " ms"); // ~75 ms при 200 000 символов
+
+        assert firstRes != null;
+        System.out.println("firstRes equals secondRes: " + firstRes.equals(secondRes));
     }
 
     public static String getPage(String filePath, int pageNum) throws IOException {
