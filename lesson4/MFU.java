@@ -5,8 +5,6 @@ import java.util.LinkedList;
 
 public class MFU {
 
-    private final int sleepTime = 2000;
-
     private final Object scanner = new Object();
     private final Object printer = new Object();
 
@@ -15,10 +13,10 @@ public class MFU {
 
     private LinkedList<String> requestsQueue = new LinkedList<>(Arrays.asList("printing", "scanning",
             "scanning", "printing", "printing", "scanning", "photocopying", "photocopying", "printing", "scanning",
-            "photocopying", "photocopying", "photocopying", "scanning"));
+            "photocopying", "photocopying", "photocopying", "scanning", "printing", "scanning", "printing", "scanning"));
 
     public MFU() {
-        tasksThreads = new Thread[3];
+        tasksThreads = new Thread[2];
 
         startInitThread();
 
@@ -134,34 +132,22 @@ public class MFU {
     private void printing() throws InterruptedException {
         synchronized (printer) {
             System.out.println("Начинаю печать");
-            Thread.sleep(sleepTime);
+            Thread.sleep(2000);
             System.out.println("Оканчиваю печать");
-
-            if (hasPhotocopyingThread()) printer.wait();
         }
     }
 
     private void scanning() throws InterruptedException {
         synchronized (scanner) {
             System.out.println("Начинаю сканировать");
-            Thread.sleep(sleepTime);
+            Thread.sleep(1000);
             System.out.println("Оканчиваю сканировать");
-
-            if (hasPhotocopyingThread()) scanner.wait();
         }
     }
 
     private void photocopying() throws InterruptedException {
-        synchronized (printer) {
-            synchronized (scanner) {
-                System.out.println("Начинаю ксерокопировать");
-                Thread.sleep(sleepTime);
-                System.out.println("Оканчиваю ксерокопировать");
-
-                scanner.notifyAll();
-            }
-
-            printer.notifyAll();
-        }
+        System.out.println("Начинаю ксерокопировать");
+        Thread.sleep(3000);
+        System.out.println("Оканчиваю ксерокопировать");
     }
 }
