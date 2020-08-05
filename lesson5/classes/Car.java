@@ -12,7 +12,6 @@ public class Car implements Runnable {
     private Semaphore smp;
     private CyclicBarrier cb;
     private AtomicInteger winnerFlag;
-    private AtomicInteger tunnelLock;
 
     private Race race;
     private int speed;
@@ -22,12 +21,10 @@ public class Car implements Runnable {
         CARS_COUNT = 0;
     }
 
-    public Car(Semaphore smp, CyclicBarrier cb, AtomicInteger winnerFlag,
-               AtomicInteger tunnelLock, Race race, int speed) {
+    public Car(Semaphore smp, CyclicBarrier cb, AtomicInteger winnerFlag, Race race, int speed) {
         this.smp = smp;
         this.cb = cb;
         this.winnerFlag = winnerFlag;
-        this.tunnelLock = tunnelLock;
         this.race = race;
         this.speed = speed;
         CARS_COUNT++;

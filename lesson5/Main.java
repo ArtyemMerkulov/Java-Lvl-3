@@ -17,9 +17,7 @@ public class Main {
          */
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
 
-        AtomicInteger tunnelLock = new AtomicInteger();
-        Race race = new Race(new Road(60), new Tunnel(),
-                new Road(40), new Tunnel(), new Road(70));
+        Race race = new Race(new Road(60), new Tunnel(), new Road(40), new Tunnel(), new Road(70));
         Car[] cars = new Car[CARS_COUNT];
 
         Semaphore smp = new Semaphore(CARS_COUNT / 2);
@@ -27,7 +25,7 @@ public class Main {
         AtomicInteger winnerFlag = new AtomicInteger();
 
         for (int i = 0; i < cars.length; i++)
-            cars[i] = new Car(smp, cb, winnerFlag, tunnelLock, race, 20 + (int) (Math.random() * 10));
+            cars[i] = new Car(smp, cb, winnerFlag, race, 20 + (int) (Math.random() * 10));
 
         for (int i = 0; i < cars.length; i++)
             new Thread(cars[i]).start();
