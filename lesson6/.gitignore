@@ -1,0 +1,6 @@
+/.idea/*
+/target/*
+/out/*
+/lesson2fx/*
+/server/src/db/*
+/server/src/configs/DBConfig.conf
