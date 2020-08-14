@@ -1,5 +1,10 @@
 package homework7;
 
+import homework7.classes.HomeworkChecker;
+import homework7.classes.Snail;
+import homework7.classes.TestCore;
+import homework7.classes.Tester;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -21,11 +26,37 @@ public class Main {
         TestCore.start(Tester.class);
 
         System.out.println();
+
         /*
         2. Написать программу для проверки ДЗ
         (Проанализировать папку с компилированными классами и вызвать методы, проверить результат)
          */
+        Object[] answers = new Object[] {
+                2.75f,
+                Boolean.FALSE,
+                Boolean.FALSE,
+                Boolean.FALSE,
+                "Привет, Петя!",
+                Boolean.TRUE
+        };
 
+        Object[][] params = new Object[][] {
+                {1f, 2f, 3f, 4f},
+                {5, 3},
+                {-4},
+                {0},
+                {"Петя"},
+                {"2020"}
+        };
+
+        HomeworkChecker homeworkChecker = new HomeworkChecker(System.getProperty("user.dir") + "/src/classFiles");
+        try {
+            homeworkChecker.startCheck(answers, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println();
 
         /*
         3. Написать метод который позволял бы заполнить и вывести на консоль
